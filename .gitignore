@@ -1,0 +1,63 @@
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# =========================
+# Java
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+
+# Diretórios de build
+out/
+target/
+build/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Sistema Operacional
+# =========================
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# =========================
+# Arquivos temporários
+# =========================
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# =========================
+# Coverage/Testes
+# =========================
+coverage/
+jacoco.exec
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Maven Wrapper (opcional)
+# =========================
+.mvn/wrapper/maven-wrapper.jar

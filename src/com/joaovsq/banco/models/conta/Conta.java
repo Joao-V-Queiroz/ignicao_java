@@ -4,7 +4,7 @@ import com.joaovsq.banco.models.pessoa.Pessoa;
 
 import java.util.Objects;
 
-public class Conta {
+public abstract class Conta {
     private Pessoa titular;
     private int agencia;
     private int numero;
@@ -40,6 +40,8 @@ public class Conta {
         }
         saldo -= valor;
     }
+
+    public abstract void debitarTarifaMensal();
 
     public void sacar(double valor, double taxaSaque){
         sacar(valor + taxaSaque);
