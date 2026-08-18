@@ -26,6 +26,7 @@ public class MenuPrincipalService {
             System.out.println("2 - Cadastrar Pessoa Jurídica");
             System.out.println("3 - Sair");
             System.out.println("----------------------------------");
+
             opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -68,7 +69,7 @@ public class MenuPrincipalService {
         } while(opcao != 3);
     }
 
-    public void exibirMenuConta(Pessoa pessoa) {
+    public void exibirMenuConta(Pessoa titular) {
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
@@ -76,10 +77,9 @@ public class MenuPrincipalService {
             System.out.println("\nMenu de Contas");
             System.out.println("----------------------------------");
             System.out.println("\nDigite a opção desejada:");
-            System.out.println("1 - Cadastrar Conta");
-            System.out.println("2 - Cadastrar Conta Especial");
-            System.out.println("3 - Cadastrar Conta Investimento");
-            System.out.println("4 - Voltar ao Menu Principal");
+            System.out.println("1 - Cadastrar Conta Especial");
+            System.out.println("2 - Cadastrar Conta Investimento");
+            System.out.println("3 - Voltar ao Menu Principal");
             System.out.println("----------------------------------");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -87,39 +87,152 @@ public class MenuPrincipalService {
             switch (opcao) {
                 case 1:
                     try{
-                        Conta conta = contaService.criarConta(pessoa);
-                        System.out.println("Conta cadastrada com sucesso!");
-                        contaService.exibirDadosConta(conta);
-                    } catch (Exception e) {
-                        System.out.println("Erro ao cadastrar conta: " + e.getMessage());
-                    }
-                    break;
-                case 2:
-                    try {
-                        ContaEspecial contaEspecial = contaService.criarContaEspecial(pessoa, 200_000.00);
-                        System.out.println("Conta Especial cadastrada com sucesso!");
-                        contaService.exibirDadosConta(contaEspecial);
+                        double valorLimite;
+                        System.out.println("Digite o valor limite da sua conta especial: ");
+                        valorLimite = scanner.nextDouble();
+
+                        ContaEspecial contaEspecial = contaService.criarContaEspecial(titular, 1239, valorLimite);
+                        System.out.println("Conta especial cadastrada com sucesso!");
+                        this.exibirMenuOperacoesContaEspecial(contaEspecial);
                     } catch (Exception e) {
                         System.out.println("Erro ao cadastrar conta especial: " + e.getMessage());
                     }
                     break;
-                case 3:
+                case 2:
                     try {
-                        ContaInvestimento contaInvestimento = contaService.criarContaInvestimento(pessoa);
-                        System.out.println("Conta de Investimento cadastrada com sucesso!");
-                        contaService.exibirDadosConta(contaInvestimento);
+                        ContaInvestimento contaInvestimento = contaService.criarContaInvestimento(titular, 1239);
+                        System.out.println("Conta investimento cadastrada com sucesso!");
+                        this.exibirMenuOperacoesContaInvestimento(contaInvestimento);
                     } catch (Exception e) {
-                        System.out.println("Erro ao cadastrar conta de investimento: " + e.getMessage());
+                        System.out.println("Erro ao cadastrar conta investimento: " + e.getMessage());
                     }
                     break;
-                case 4:
+                case 3:
                     System.out.println("Voltando ao Menu Principal...");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
 
-        } while(opcao != 4);
+        } while(opcao != 3);
+    }
+
+    public void exibirMenuOperacoesContaEspecial(ContaEspecial contaEspecial) {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do{
+            System.out.println("\nOperações conta especial");
+            System.out.println("----------------------------------");
+            System.out.println("1 - Dados da conta especial");
+            System.out.println("2 - Depositar");
+            System.out.println("3 - Sacar");
+            System.out.println("4 - Debitar tarifa mensal");
+            System.out.println("5 - Voltar ao Menu Principal");
+            System.out.println("---------------------------------");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    contaService.exibirDadosConta(contaEspecial);
+                    break;
+                case 2:
+                    double valorDeposito;
+
+                    System.out.println("Digite o valor deposito:");
+                    valorDeposito = scanner.nextDouble();
+
+                    contaService.depositar(contaEspecial, valorDeposito);
+                    break;
+                case 3:
+                    double valorSaque;
+
+                    System.out.println("Digite o valor saque:");
+                    valorSaque = scanner.nextDouble();
+
+                    contaService.sacar(contaEspecial, valorSaque);
+                    break;
+
+                case 4:
+                    contaService.debitarTarifaMensal(contaEspecial);
+                    break;
+
+                case 5:
+                    System.out.println("Voltando ao Menu Principal...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+
+        }while (opcao != 5);
+    }
+
+    public void exibirMenuOperacoesContaInvestimento(ContaInvestimento contaInvestimento) {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do{
+            System.out.println("\nOperações conta investimento");
+            System.out.println("-------------------------------");
+            System.out.println("1 - Dados da conta especial");
+            System.out.println("2 - Depositar");
+            System.out.println("3 - Sacar");
+            System.out.println("4 - Debitar tarifa mensal");
+            System.out.println("5 - Creditar rendimentos");
+            System.out.println("6 - Voltar ao Menu Principal");
+            System.out.println("-------------------------------");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    contaService.exibirDadosConta(contaInvestimento);
+                    break;
+
+                case 2:
+                    double valorDeposito;
+
+                    System.out.println("Digite o valor deposito:");
+                    valorDeposito = scanner.nextDouble();
+
+                    contaService.depositar(contaInvestimento, valorDeposito);
+                    break;
+
+                case 3:
+                    double valorSaque;
+
+                    System.out.println("Digite o valor saque:");
+                    valorSaque = scanner.nextDouble();
+
+                    contaService.sacar(contaInvestimento, valorSaque);
+                    break;
+
+                case 4:
+                    contaService.debitarTarifaMensal(contaInvestimento);
+                    break;
+
+                case 5:
+                    double valorInvestimento;
+
+                    System.out.println("Digite o valor investimento:");
+                    valorInvestimento =  scanner.nextDouble();
+
+                    contaService.creditarRendimentos(contaInvestimento, valorInvestimento);
+                    break;
+
+                case 6:
+                    System.out.println("Voltando ao Menu Principal...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+
+        } while (opcao != 6);
     }
 
 }

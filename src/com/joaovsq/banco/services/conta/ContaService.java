@@ -7,46 +7,20 @@ import com.joaovsq.banco.models.pessoa.Pessoa;
 
 public class ContaService {
 
-    public Conta criarConta(Pessoa titular) {
-        try{
-            int agencia = 1239;
-            int numero = (int) (Math.random() * 900000) + 1000; // Gera um número aleatório entre 1000 e 999999
-            Conta conta = new Conta(titular, agencia, numero);
+    public ContaEspecial criarContaEspecial(Pessoa titular,int agencia, double valorLimite) {
+        int numero = this.gerarNumeroConta();
 
-            return conta;
-        } catch (Exception e) {
-            System.out.println("Erro ao criar conta: " + e.getMessage());
-
-            return null;
-        }
+        return new ContaEspecial(titular, agencia, numero, valorLimite);
     }
 
-    public ContaEspecial criarContaEspecial(Pessoa titular, double valorLimite) {
-        try{
-            int agencia = 1239;
-            int numero = (int) (Math.random() * 900000) + 1000; // Gera um número aleatório entre 1000 e 999999
-            ContaEspecial contaEspecial = new ContaEspecial(titular, agencia, numero, valorLimite);
+    public ContaInvestimento criarContaInvestimento(Pessoa titular, int agencia) {
+        int numero = this.gerarNumeroConta();
 
-            return contaEspecial;
-        } catch (Exception e) {
-            System.out.println("Erro ao criar conta especial: " + e.getMessage());
-
-            return null;
-        }
+        return new ContaInvestimento(titular, agencia, numero);
     }
 
-    public ContaInvestimento criarContaInvestimento(Pessoa titular) {
-        try{
-            int agencia = 1239;
-            int numero = (int) (Math.random() * 900000) + 1000; // Gera um número aleatório entre 1000 e 999999
-            ContaInvestimento contaInvestimento = new ContaInvestimento(titular, agencia, numero);
-
-            return contaInvestimento;
-        } catch (Exception e) {
-            System.out.println("Erro ao criar conta investimento: " + e.getMessage());
-
-            return null;
-        }
+    private int gerarNumeroConta() {
+        return (int) (Math.random() * 900000) + 1000;
     }
 
     public void exibirDadosConta(Conta conta) {
@@ -54,12 +28,62 @@ public class ContaService {
         System.out.println("\nDados da Conta");
         System.out.println("Número da Conta Especial: " + conta.getNumero());
         System.out.println("Agência: " + conta.getAgencia());
-        System.out.println("Saldo: " + conta.getSaldo());
-        if(conta.getSaldoDisponivel() != 0.0) {
-            System.out.println("Saldo Disponível conta especial: " + conta.getSaldoDisponivel());
-        }
+        System.out.println("Saldo Disponível: " + conta.getSaldoDisponivel());
         System.out.println("Titular: " + conta.getTitular().getNome());
         System.out.println("----------------------------------\n");
+    }
+
+    public void depositar(Conta conta, double valorDeposito) {
+       try{
+           conta.depositar(valorDeposito);
+           System.out.println("Valor de R$" +  valorDeposito + " depositado com sucesso!");
+
+           System.out.println("\nSaldo disponível na conta R$" + conta.getSaldoDisponivel());
+       } catch (Exception e) {
+           System.out.println("Erro ao depositar: " + e.getMessage());
+       }
+    }
+
+    public void sacar(Conta conta, double valorSaque) {
+        try {
+            conta.sacar(valorSaque);
+            System.out.println("Saque realizado com sucesso!");
+
+            System.out.println("\nSaldo disponível na conta R$" + conta.getSaldoDisponivel());
+        } catch (Exception e) {
+            System.out.println("Erro ao sacar: " + e.getMessage());
+        }
+    }
+
+    public void debitarTarifaMensal(Conta conta) {
+        try {
+            if(conta instanceof ContaInvestimento){
+                conta.debitarTarifaMensal();
+                System.out.println("Débito da tarifa mensal realizado com sucesso!");
+                System.out.println("\nSaldo disponível na conta R$" + conta.getSaldoDisponivel());
+            }else {
+                System.out.println("Débito da tarifa mensal não realizado! Valor do saldo é maior que R$10.000");
+            }
+            if(conta instanceof ContaEspecial){
+                conta.debitarTarifaMensal();
+                System.out.println("Débito da tarifa mensal realizado com sucesso!");
+                System.out.println("\nSaldo disponível na conta R$" + conta.getSaldoDisponivel());
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao debitar tarifa mensal: " + e.getMessage());
+        }
+    }
+
+    public void creditarRendimentos(ContaInvestimento contaInvestimento, double valorInvestimento) {
+        try {
+            contaInvestimento.creditarRendimentos(valorInvestimento);
+            System.out.println("Investimento realizado com sucesso!");
+
+            System.out.println("\nSaldo disponível na conta R$" + contaInvestimento.getSaldoDisponivel());
+
+        } catch (Exception e) {
+            System.out.println("Erro ao creditar rendimentos da conta: " + e.getMessage());
+        }
     }
 
 }
