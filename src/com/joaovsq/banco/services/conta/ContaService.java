@@ -57,18 +57,11 @@ public class ContaService {
 
     public void debitarTarifaMensal(Conta conta) {
         try {
-            if(conta instanceof ContaInvestimento){
-                conta.debitarTarifaMensal();
-                System.out.println("Débito da tarifa mensal realizado com sucesso!");
-                System.out.println("\nSaldo disponível na conta R$" + conta.getSaldoDisponivel());
-            }else {
-                System.out.println("Débito da tarifa mensal não realizado! Valor do saldo é maior que R$10.000");
-            }
-            if(conta instanceof ContaEspecial){
-                conta.debitarTarifaMensal();
-                System.out.println("Débito da tarifa mensal realizado com sucesso!");
-                System.out.println("\nSaldo disponível na conta R$" + conta.getSaldoDisponivel());
-            }
+            conta.debitarTarifaMensal();
+
+            System.out.println("Débito da tarifa mensal realizado com sucesso!");
+            System.out.println(
+                    "Saldo disponível na conta R$" + conta.getSaldoDisponivel());
         } catch (Exception e) {
             System.out.println("Erro ao debitar tarifa mensal: " + e.getMessage());
         }
