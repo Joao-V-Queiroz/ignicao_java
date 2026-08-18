@@ -2,7 +2,6 @@
 # IntelliJ IDEA
 # =========================
 .idea/
-*.iml
 *.ipr
 *.iws
 
