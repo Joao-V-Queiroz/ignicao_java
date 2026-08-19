@@ -35,6 +35,9 @@ public class MenuPrincipalService {
                 Pessoa pf = pessoaService.criarPessoa("F");
                 pessoaService.exibirDadosTitular(pf);
 
+                System.out.println("Verificando a necessidade de declaração de imposto de renda...");
+                pf.declararImposto();
+
                 System.out.println("Deseja cadastrar uma conta para essa pessoa física? (1 - Sim, 2 - Não)");
                 cadastrarConta = scanner.nextInt();
                 scanner.nextLine();
@@ -48,6 +51,9 @@ public class MenuPrincipalService {
             } else if(opcao == 2) {
                 Pessoa pj = pessoaService.criarPessoa("J");
                 pessoaService.exibirDadosTitular(pj);
+
+                System.out.println("Verificando a necessidade de declaração de imposto de renda...");
+                pj.declararImposto();
 
                 int cadastrarConta;
                 System.out.println("Deseja cadastrar uma conta para essa pessoa jurídica? (1 - Sim, 2 - Não)");

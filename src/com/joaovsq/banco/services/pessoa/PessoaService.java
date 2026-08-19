@@ -3,6 +3,8 @@ package com.joaovsq.banco.services.pessoa;
 import com.joaovsq.banco.models.pessoa.Pessoa;
 import com.joaovsq.banco.models.pessoa.PessoaFisica;
 import com.joaovsq.banco.models.pessoa.PessoaJuridica;
+
+import javax.swing.plaf.basic.BasicDesktopIconUI;
 import java.util.Scanner;
 
 public class PessoaService {
@@ -29,6 +31,10 @@ public class PessoaService {
             String telefone = scanner.nextLine();
             pf.setTelefone(telefone);
 
+            System.out.println("Digite o salário da pessoa física: ");
+            double salario = scanner.nextDouble();
+            pf.setSalario(salario);
+
             return pf;
         } else if(tipoPessoa.equals("J")) {
             System.out.println("Digite o nome da pessoa jurídica: ");
@@ -46,6 +52,10 @@ public class PessoaService {
             System.out.println("Digite o telefone da pessoa jurídica: ");
             String telefone = scanner.nextLine();
             pj.setTelefone(telefone);
+
+            System.out.println("Digite a o faturamento: ");
+            double faturamento = scanner.nextDouble();
+            pj.setFaturamento(faturamento);
 
             return pj;
         } else {

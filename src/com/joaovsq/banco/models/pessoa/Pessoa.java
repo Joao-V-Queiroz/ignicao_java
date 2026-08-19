@@ -4,7 +4,7 @@ import com.joaovsq.banco.models.conta.Conta;
 
 import java.util.List;
 
-public class Pessoa {
+public abstract class Pessoa {
     private String nome;
     private String email;
     private String telefone;
@@ -17,6 +17,9 @@ public class Pessoa {
         this.email = email;
         this.telefone = telefone;
     }
+
+    public abstract void declararImposto();
+
 
     public String getNome() {
         return nome;
@@ -41,4 +44,6 @@ public class Pessoa {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+
 }
